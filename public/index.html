@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trust Score Engine - Community Integrity Analytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">⚙️ Trust Score Engine</div>
+        <div class="nav-links">
+          <a href="/login.html" class="btn btn-outline">Login</a>
+          <a href="/signup.html" class="btn btn-primary">Get Started</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section with Particle Background -->
+    <div class="hero">
+      <canvas id="particleCanvas" class="particle-bg"></canvas>
+      <div class="hero-content">
+        <h1 class="hero-title">Trust Score Engine</h1>
+        <p class="hero-subtitle">Real-time behavioral analytics for community integrity</p>
+        <div class="hero-cta">
+          <a href="/signup.html" class="btn btn-primary btn-lg">Get Started</a>
+          <a href="/login.html" class="btn btn-outline btn-lg">Login</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features">
+      <div class="container">
+        <h2 class="section-title">Why Trust Score Engine?</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Dynamic Trust Scoring</h3>
+            <p>Real-time trust score calculation based on user behavior and community interactions</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🚨</div>
+            <h3>Suspicious Detection</h3>
+            <p>Automated detection of suspicious activity patterns and cluster analysis</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📝</div>
+            <h3>Full Audit Trail</h3>
+            <p>Comprehensive activity logging and trust history for complete transparency</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔗</div>
+            <h3>Trust Graph</h3>
+            <p>Visualize relationships and trust networks between community members</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚖️</div>
+            <h3>Weighted Voting</h3>
+            <p>Votes carry weight based on voter credibility for fair community consensus</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Cluster Analysis</h3>
+            <p>Organize suspicious users into risk-level clusters for targeted moderation</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Ticker -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" data-count="2500">0</div>
+            <div class="stat-label">Active Users</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-count="45000">0</div>
+            <div class="stat-label">Trust Events</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-count="328">0</div>
+            <div class="stat-label">Flags Raised</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-count="99.2">0</div>
+            <div class="stat-label">% Accuracy</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2026 Trust Score Engine. Building community integrity through transparency.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Particle background
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = Math.random() * 2 + 1;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      }
+
+      draw() {
+        ctx.fillStyle = 'rgba(59, 130, 246, 0.5)';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 50; i++) {
+      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p) => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Counter animation
+    function animateCounters() {
+      const counters = document.querySelectorAll('.stat-number');
+      counters.forEach((counter) => {
+        const target = parseInt(counter.getAttribute('data-count'));
+        let current = 0;
+        const increment = target / 50;
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            counter.textContent = target;
+            clearInterval(timer);
+          } else {
+            counter.textContent = Math.floor(current);
+          }
+        }, 30);
+      });
+    }
+
+    window.addEventListener('load', animateCounters);
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>

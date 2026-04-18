@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feed - Trust Score Engine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-container">
+        <div class="logo">⚙️ Trust Score Engine</div>
+        <nav class="nav">
+          <a href="/dashboard.html" class="nav-link">Dashboard</a>
+          <a href="/feed.html" class="nav-link active">Feed</a>
+          <a href="/profile.html" class="nav-link">Profile</a>
+          <span id="adminLink"></span>
+        </nav>
+        <div class="user-menu">
+          <span id="userDisplay" class="username"></span>
+          <button class="btn btn-outline btn-sm" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="feed-page">
+      <div class="container">
+        <!-- Topic Filters -->
+        <div class="topic-filters">
+          <button class="topic-btn active" data-topic="all">All Topics</button>
+          <button class="topic-btn" data-topic="1">Technology</button>
+          <button class="topic-btn" data-topic="2">Politics</button>
+          <button class="topic-btn" data-topic="3">Science</button>
+          <button class="topic-btn" data-topic="4">Sports</button>
+          <button class="topic-btn" data-topic="5">Entertainment</button>
+        </div>
+
+        <!-- New Post Button -->
+        <button class="floating-btn" id="newPostBtn" onclick="openNewPostModal()">+</button>
+
+        <!-- Posts Grid -->
+        <div class="posts-grid" id="postsGrid">
+          <div class="post-skeleton">
+            <div class="skeleton"></div>
+            <div class="skeleton"></div>
+          </div>
+          <div class="post-skeleton">
+            <div class="skeleton"></div>
+            <div class="skeleton"></div>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state hidden">
+          <div class="empty-icon">📭</div>
+          <p>No posts found</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- New Post Modal -->
+    <div id="postModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Create New Post</h2>
+          <button class="modal-close" onclick="closeNewPostModal()">✕</button>
+        </div>
+        <form id="newPostForm" class="modal-form">
+          <div class="form-group">
+            <label for="topicSelect">Topic</label>
+            <select id="topicSelect" name="topic_id" required>
+              <option value="">Select a topic</option>
+              <option value="1">Technology</option>
+              <option value="2">Politics</option>
+              <option value="3">Science</option>
+              <option value="4">Sports</option>
+              <option value="5">Entertainment</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="postContent">What's on your mind?</label>
+            <textarea id="postContent" name="content" placeholder="Share your thoughts..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script src="/js/auth.js"></script>
+  <script src="/js/feed.js"></script>
+</body>
+</html>

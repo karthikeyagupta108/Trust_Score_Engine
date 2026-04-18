@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Trust Score Engine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-container">
+        <div class="logo">⚙️ Trust Score Engine</div>
+        <nav class="nav">
+          <a href="/dashboard.html" class="nav-link active">Dashboard</a>
+          <a href="/feed.html" class="nav-link">Feed</a>
+          <a href="/profile.html" class="nav-link">Profile</a>
+          <span id="adminLink"></span>
+        </nav>
+        <div class="user-menu">
+          <span id="userDisplay" class="username"></span>
+          <button class="btn btn-outline btn-sm" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard">
+      <div class="container">
+        <!-- Top Stats Cards -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-header">Trust Score</div>
+            <div class="stat-value" id="trustScore">--</div>
+            <div class="stat-bar">
+              <div class="stat-bar-fill" id="trustScoreBar"></div>
+            </div>
+            <div class="stat-hint" id="trustStatus"></div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">Suspicion Score <span id="suspicionWarning" class="warning-icon hidden">⚠️</span></div>
+            <div class="stat-value" id="suspicionScore">--</div>
+            <div class="stat-bar">
+              <div class="stat-bar-fill danger" id="suspicionScoreBar"></div>
+            </div>
+            <div class="stat-hint">Lower is better</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">Total Posts</div>
+            <div class="stat-value" id="totalPosts">--</div>
+            <div class="stat-hint">Community contributions</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">Total Interactions</div>
+            <div class="stat-value" id="totalInteractions">--</div>
+            <div class="stat-hint">Votes, reports, shares</div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="charts-row">
+          <div class="chart-container">
+            <h3>Trust Score History</h3>
+            <canvas id="trustChart"></canvas>
+          </div>
+
+          <div class="activity-container">
+            <h3>Recent Activity</h3>
+            <div class="activity-list" id="activityList">
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Behavior & Leaderboard Row -->
+        <div class="behavior-row">
+          <div class="behavior-container">
+            <h3>Behavior Metrics</h3>
+            <div class="metric-item">
+              <label>Posts per Day</label>
+              <div class="metric-bar">
+                <div class="metric-bar-fill" id="postsPerDayBar"></div>
+              </div>
+              <span id="postsPerDayVal">0</span>
+            </div>
+            <div class="metric-item">
+              <label>Burst Activity Score</label>
+              <div class="metric-bar">
+                <div class="metric-bar-fill" id="burstActivityBar"></div>
+              </div>
+              <span id="burstActivityVal">0</span>
+            </div>
+            <div class="metric-item">
+              <label>Interaction Entropy</label>
+              <div class="metric-bar">
+                <div class="metric-bar-fill" id="entropyBar"></div>
+              </div>
+              <span id="entropyVal">0</span>
+            </div>
+          </div>
+
+          <div class="leaderboard-container">
+            <h3>Trust Leaderboard (Top 5)</h3>
+            <div class="leaderboard" id="leaderboard">
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script src="/js/auth.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

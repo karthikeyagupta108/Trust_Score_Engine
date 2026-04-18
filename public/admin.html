@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Trust Score Engine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-container">
+        <div class="logo">⚙️ Trust Score Engine</div>
+        <nav class="nav">
+          <a href="/dashboard.html" class="nav-link">Dashboard</a>
+          <a href="/feed.html" class="nav-link">Feed</a>
+          <a href="/profile.html" class="nav-link">Profile</a>
+          <a href="/admin.html" class="nav-link active">Admin</a>
+        </nav>
+        <div class="user-menu">
+          <span id="userDisplay" class="username"></span>
+          <button class="btn btn-outline btn-sm" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Admin Layout -->
+    <div class="admin-layout">
+      <!-- Sidebar -->
+      <aside class="admin-sidebar">
+        <nav class="admin-nav">
+          <button class="admin-nav-btn active" data-panel="stats">📊 Statistics</button>
+          <button class="admin-nav-btn" data-panel="suspicious">🚨 Suspicious Users</button>
+          <button class="admin-nav-btn" data-panel="clusters">🎯 Clusters</button>
+          <button class="admin-nav-btn" data-panel="history">📝 Trust History</button>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="admin-main">
+        <!-- Stats Panel -->
+        <section id="statsPanel" class="admin-panel active">
+          <h2>Platform Statistics</h2>
+          <button class="btn btn-primary" onclick="recalculateSuspicious()">Re-run Detection</button>
+
+          <div class="admin-stats">
+            <div class="admin-stat-card">
+              <h3>Total Users</h3>
+              <div class="admin-stat-value" id="totalUsers">--</div>
+            </div>
+            <div class="admin-stat-card">
+              <h3>Average Trust Score</h3>
+              <div class="admin-stat-value" id="avgTrust">--</div>
+            </div>
+            <div class="admin-stat-card">
+              <h3>Suspicious Users</h3>
+              <div class="admin-stat-value" id="suspiciousCount">--</div>
+            </div>
+            <div class="admin-stat-card">
+              <h3>Total Posts</h3>
+              <div class="admin-stat-value" id="totalPosts">--</div>
+            </div>
+            <div class="admin-stat-card">
+              <h3>Suspicious %</h3>
+              <div class="admin-stat-value" id="suspiciousPercent">--</div>
+            </div>
+            <div class="admin-stat-card">
+              <h3>Most Active Topic</h3>
+              <div class="admin-stat-value" id="topTopic">--</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Suspicious Users Panel -->
+        <section id="suspiciousPanel" class="admin-panel">
+          <h2>Suspicious Users</h2>
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>Username</th>
+                  <th>Trust Score</th>
+                  <th>Suspicion Score</th>
+                  <th>Reason</th>
+                  <th>Severity</th>
+                  <th>Cluster</th>
+                  <th>Detected</th>
+                </tr>
+              </thead>
+              <tbody id="suspiciousTable">
+                <tr>
+                  <td colspan="8" class="loading">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Clusters Panel -->
+        <section id="clustersPanel" class="admin-panel">
+          <h2>Suspicious Clusters</h2>
+          <div class="clusters-grid" id="clustersGrid">
+            <div class="cluster-skeleton"></div>
+            <div class="cluster-skeleton"></div>
+          </div>
+        </section>
+
+        <!-- Trust History Panel -->
+        <section id="historyPanel" class="admin-panel">
+          <h2>Global Trust History</h2>
+          <div class="form-group">
+            <input type="number" id="historyUserFilter" placeholder="Filter by User ID" min="1">
+            <button class="btn btn-outline" onclick="filterTrustHistory()">Filter</button>
+          </div>
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Old Score</th>
+                  <th>New Score</th>
+                  <th>Change</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="historyTable">
+                <tr>
+                  <td colspan="5" class="loading">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script src="/js/auth.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

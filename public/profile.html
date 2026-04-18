@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Trust Score Engine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-container">
+        <div class="logo">⚙️ Trust Score Engine</div>
+        <nav class="nav">
+          <a href="/dashboard.html" class="nav-link">Dashboard</a>
+          <a href="/feed.html" class="nav-link">Feed</a>
+          <a href="/profile.html" class="nav-link active">Profile</a>
+          <span id="adminLink"></span>
+        </nav>
+        <div class="user-menu">
+          <span id="userDisplay" class="username"></span>
+          <button class="btn btn-outline btn-sm" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="profile-page">
+      <div class="container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+          <div class="profile-avatar" id="profileAvatar">A</div>
+          <div class="profile-info">
+            <h1 id="profileUsername">--</h1>
+            <p id="memberSince">Member since --</p>
+            <div class="status-badge" id="statusBadge">Active</div>
+          </div>
+        </div>
+
+        <!-- Trust Score Section -->
+        <div class="profile-scores">
+          <div class="score-card">
+            <h3>Trust Score</h3>
+            <div class="circular-progress" id="trustCircle">
+              <svg viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50" class="circle-bg"></circle>
+                <circle cx="60" cy="60" r="50" class="circle-fill" id="trustCircleFill"></circle>
+              </svg>
+              <div class="circle-text" id="trustScoreDisplay">--</div>
+            </div>
+            <p class="score-label" id="trustLabel">Excellent</p>
+          </div>
+
+          <div class="score-card">
+            <h3>Suspicion Score</h3>
+            <div class="circular-progress danger" id="suspicionCircle">
+              <svg viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50" class="circle-bg"></circle>
+                <circle cx="60" cy="60" r="50" class="circle-fill" id="suspicionCircleFill"></circle>
+              </svg>
+              <div class="circle-text" id="suspicionScoreDisplay">--</div>
+            </div>
+            <p class="score-label" id="suspicionLabel">Low Risk</p>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="posts">Posts</button>
+          <button class="tab-btn" data-tab="activity">Activity</button>
+          <button class="tab-btn" data-tab="history">Trust History</button>
+          <button class="tab-btn" data-tab="behavior">Behavior</button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div class="tab-content">
+          <!-- Posts Tab -->
+          <div id="posts" class="tab-pane active">
+            <div class="posts-list" id="postsList">
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+            </div>
+          </div>
+
+          <!-- Activity Tab -->
+          <div id="activity" class="tab-pane">
+            <div class="activity-table">
+              <div id="activityList" class="activity-list">
+                <div class="skeleton"></div>
+                <div class="skeleton"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trust History Tab -->
+          <div id="history" class="tab-pane">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Old Score</th>
+                  <th>New Score</th>
+                  <th>Change</th>
+                </tr>
+              </thead>
+              <tbody id="historyTable">
+                <tr>
+                  <td colspan="4" class="skeleton-row"><div class="skeleton"></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Behavior Tab -->
+          <div id="behavior" class="tab-pane">
+            <div class="behavior-grid">
+              <div class="behavior-card">
+                <h4>Posts per Day</h4>
+                <div class="behavior-value" id="postsPerDay">--</div>
+              </div>
+              <div class="behavior-card">
+                <h4>Avg Post Interval</h4>
+                <div class="behavior-value" id="avgPostInterval">--</div>
+              </div>
+              <div class="behavior-card">
+                <h4>Burst Activity Score</h4>
+                <div class="behavior-value" id="burstActivityScore">--</div>
+              </div>
+              <div class="behavior-card">
+                <h4>Interaction Entropy</h4>
+                <div class="behavior-value" id="interactionEntropy">--</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script src="/js/auth.js"></script>
+  <script src="/js/profile.js"></script>
+</body>
+</html>
