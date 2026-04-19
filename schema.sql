@@ -202,16 +202,31 @@ BEGIN
   FROM interactions i
   WHERE i.target_post_id = NEW.target_post_id;
 
-  SELECT COALESCE(SUM(i.interaction_weight * u.trust_score / 100), 0)
-  INTO weighted_score
-  FROM interactions i
-  JOIN users u ON i.actor_user_id = u.user_id
-  WHERE i.target_post_id = NEW.target_post_id AND i.interaction_type = 'upvote'
-  MINUS
-  SELECT COALESCE(SUM(i.interaction_weight * u.trust_score / 100), 0)
-  FROM interactions i
-  JOIN users u ON i.actor_user_id = u.user_id
-  WHERE i.target_post_id = NEW.target_post_id AND i.interaction_type = 'downvote';
+  -- SELECT COALESCE(SUM(i.interaction_weight * u.trust_score / 100), 0)
+  -- INTO weighted_score
+  -- FROM interactions i
+  -- JOIN users u ON i.actor_user_id = u.user_id
+  -- WHERE i.target_post_id = NEW.target_post_id AND i.interaction_type = 'upvote'
+  -- NOT IN
+  -- SELECT COALESCE(SUM(i.interaction_weight * u.trust_score / 100), 0)
+  -- FROM interactions i
+  -- JOIN users u ON i.actor_user_id = u.user_id
+  -- WHERE i.target_post_id = NEW.target_post_id AND i.interaction_type = 'downvote';
+
+
+SELECT 
+    COALESCE(SUM(
+        CASE 
+            WHEN i.interaction_type = 'upvote' THEN i.interaction_weight * u.trust_score / 100
+            WHEN i.interaction_type = 'downvote' THEN - (i.interaction_weight * u.trust_score / 100)
+            ELSE 0
+        END
+    ), 0)
+INTO weighted_score
+FROM interactions i
+JOIN users u ON i.actor_user_id = u.user_id
+WHERE i.target_post_id = NEW.target_post_id;
+
 
   INSERT INTO post_vote_summary (post_id, upvotes, downvotes, reports, trust_weighted_score)
   VALUES (NEW.target_post_id, vote_count, downvote_count, report_count, weighted_score)
